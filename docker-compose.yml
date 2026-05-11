@@ -1,0 +1,44 @@
+
+services:
+  student-service:
+    build: ./student-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SERVER_PORT=8081
+
+  course-service:
+    build: ./course-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SERVER_PORT=8082
+
+  enrollment-service:
+    build: ./enrollment-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SERVER_PORT=8083
+    depends_on:
+      - student-service
+      - course-service
+
+  notification-service:
+    build: ./notification-service
+    ports:
+      - "8084:8084"
+    environment:
+      - SERVER_PORT=8084
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+    depends_on:
+      - student-service
+      - course-service
+      - enrollment-service
+      - notification-service
