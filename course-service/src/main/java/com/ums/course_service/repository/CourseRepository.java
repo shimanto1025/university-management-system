@@ -1,8 +1,10 @@
 package com.ums.course_service.repository;
 
-import com.ums.course_service.model.Course;
-import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.ums.course_service.model.Course;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
     Optional<Course> findByCourseCode(String courseCode);

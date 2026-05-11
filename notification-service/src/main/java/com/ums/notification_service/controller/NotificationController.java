@@ -28,7 +28,7 @@ public class NotificationController {
         notification.setId(counter.getAndIncrement());
         notification.setTimestamp(java.time.LocalDateTime.now());
         notifications.add(notification);
-        System.out.println("📧 NOTIFICATION: " + notification.getMessage());
+        System.out.println("NOTIFICATION: " + notification.getMessage());
         return ResponseEntity.status(HttpStatus.CREATED).body(notification);
     }
     

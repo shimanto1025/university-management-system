@@ -3,7 +3,7 @@ package com.ums.enrollment_service.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 import com.ums.enrollment_service.model.Enrollment;
 import com.ums.enrollment_service.repository.EnrollmentRepository;
@@ -12,31 +12,35 @@ import com.ums.enrollment_service.repository.EnrollmentRepository;
 public class EnrollmentService {
     
     private final EnrollmentRepository enrollmentRepository;
-    private final RestTemplate restTemplate;
+    private final RestClient restClient;
     
     public EnrollmentService(EnrollmentRepository enrollmentRepository) {
         this.enrollmentRepository = enrollmentRepository;
-        this.restTemplate = new RestTemplate();
+        this.restClient = RestClient.builder().build();
     }
     
     public Enrollment createEnrollment(Long studentId, Long courseId) {
-        // Check if student exists
+        // Check student exists
         try {
-            restTemplate.getForObject(
-                "http://localhost:8081/api/students/" + studentId, Object.class);
+            restClient.get()
+                .uri("http://localhost:8081/api/students/" + studentId)
+                .retrieve()
+                .toBodilessEntity();
         } catch (Exception e) {
             throw new RuntimeException("Student not found: " + studentId);
         }
         
-        // Check if course exists
+        // Check course exists
         try {
-            restTemplate.getForObject(
-                "http://localhost:8082/api/courses/" + courseId, Object.class);
+            restClient.get()
+                .uri("http://localhost:8082/api/courses/" + courseId)
+                .retrieve()
+                .toBodilessEntity();
         } catch (Exception e) {
             throw new RuntimeException("Course not found: " + courseId);
         }
         
-        // Check if already enrolled
+        // Check duplicate
         if (enrollmentRepository.existsByStudentIdAndCourseId(studentId, courseId)) {
             throw new RuntimeException("Student already enrolled in this course");
         }
@@ -60,3 +64,4 @@ public class EnrollmentService {
         enrollmentRepository.deleteById(id);
     }
 }
+   

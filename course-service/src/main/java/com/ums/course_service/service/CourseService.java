@@ -1,9 +1,11 @@
 package com.ums.course_service.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.ums.course_service.model.Course;
 import com.ums.course_service.repository.CourseRepository;
-import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class CourseService {

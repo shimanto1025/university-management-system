@@ -10,13 +10,6 @@ public class Notification {
     
     public Notification() {}
     
-    public Notification(Long id, Long studentId, String message) {
-        this.id = id;
-        this.studentId = studentId;
-        this.message = message;
-        this.timestamp = LocalDateTime.now();
-    }
-    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Long getStudentId() { return studentId; }
