@@ -23,7 +23,7 @@ public class EnrollmentService {
         // Check student exists
         try {
             restClient.get()
-                .uri("http://localhost:8081/api/students/" + studentId)
+                .uri("http://student-service:8081/api/students/" + studentId)
                 .retrieve()
                 .toBodilessEntity();
         } catch (Exception e) {
@@ -33,7 +33,7 @@ public class EnrollmentService {
         // Check course exists
         try {
             restClient.get()
-                .uri("http://localhost:8082/api/courses/" + courseId)
+                .uri("http://course-service:8082/api/courses/" + courseId)
                 .retrieve()
                 .toBodilessEntity();
         } catch (Exception e) {
